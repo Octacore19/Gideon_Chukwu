@@ -26,5 +26,4 @@ object FiltersService {
             .addInterceptor(loggingInterceptor)
             .build()
     }
-
 }

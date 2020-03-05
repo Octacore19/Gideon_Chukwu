@@ -6,6 +6,9 @@ import kotlinx.coroutines.Deferred
 import retrofit2.http.GET
 
 interface FiltersAPI {
+    /*@GET("/accounts")
+    fun getFiltersList() : Deferred<Response<Filters>>*/
+
     @GET("/accounts")
-    fun getFiltersList() : Deferred<Response<Filters>>
+    suspend fun getFiltersList() : Filters
 }
