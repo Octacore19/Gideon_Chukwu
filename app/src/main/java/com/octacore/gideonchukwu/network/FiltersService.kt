@@ -1,6 +1,6 @@
 package com.octacore.gideonchukwu.network
 
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
+import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -11,10 +11,9 @@ object FiltersService {
 
     fun createService(): FiltersAPI = getRetrofitService().create(FiltersAPI::class.java)
 
-    fun getRetrofitService() : Retrofit = Retrofit.Builder()
+    private fun getRetrofitService() : Retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)
-        .addConverterFactory(GsonConverterFactory.create())
-        .addCallAdapterFactory(CoroutineCallAdapterFactory())
+        .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
         .client(getClient())
         .build()
 
