@@ -14,4 +14,11 @@
     <string name="car_color">Car Color:</string>
     <string name="job_title">Job Title:</string>
     <string name="bio">Bio:</string>
+    <string name="by_name">By Name</string>
+    <string name="by_date">By Date</string>
+    <string name="by_gender">By Gender</string>
+    <string name="by_colour">By Colour</string>
+    <string name="by_country">By Country</string>
+    <string name="filter">Filter</string>
+    <string name="no_internet_connection">Oops! No Internet Connection</string>
 </resources>

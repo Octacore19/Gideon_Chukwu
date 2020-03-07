@@ -17,10 +17,14 @@ import com.octacore.gideonchukwu.model.Model.Filters
 import com.octacore.gideonchukwu.R
 import com.octacore.gideonchukwu.view.CarOwnerActivity
 
-class FiltersRecyclerAdapter(private val filterList: List<Filters>): RecyclerView.Adapter<FiltersRecyclerAdapter.ViewHolder>() {
+class FiltersRecyclerAdapter(private val filterList: List<Filters>) :
+    RecyclerView.Adapter<FiltersRecyclerAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.filters_recycler_item, parent, false))
+        return ViewHolder(
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.filters_recycler_item, parent, false)
+        )
     }
 
     override fun getItemCount(): Int {
@@ -31,7 +35,7 @@ class FiltersRecyclerAdapter(private val filterList: List<Filters>): RecyclerVie
         holder.bindView(filterList[position], position)
     }
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val avatarView: ImageView = itemView.findViewById(R.id.avatarImageView)
         private val fullNameView: TextView = itemView.findViewById(R.id.fullNameTextView)
         private val genderView: TextView = itemView.findViewById(R.id.genderTextView)
@@ -39,7 +43,7 @@ class FiltersRecyclerAdapter(private val filterList: List<Filters>): RecyclerVie
         private val colorsView: TextView = itemView.findViewById(R.id.colorsTextView)
         private val countriesView: TextView = itemView.findViewById(R.id.countriesTextView)
 
-        fun bindView(data: Filters, position: Int){
+        fun bindView(data: Filters, position: Int) {
             Glide.with(itemView)
                 .load(Uri.parse(data.avatar))
                 .centerCrop()
@@ -49,30 +53,31 @@ class FiltersRecyclerAdapter(private val filterList: List<Filters>): RecyclerVie
                 .into(avatarView)
 
             fullNameView.text = data.fullName
-            genderView.text = data.gender.capitalize()
+            genderView.text = data.gender?.capitalize()
             creationDateView.text = data.createdAt
 
             val colorBuilder = StringBuilder()
-            data.colors.forEach {
+            data.colors?.forEach {
                 colorBuilder.append(it).append(", ")
             }
+            if (colorBuilder.isNullOrEmpty()) itemView.findViewById<LinearLayout>(R.id.coloursLayout).visibility =
+                View.GONE
+            else itemView.findViewById<LinearLayout>(R.id.coloursLayout).visibility = View.VISIBLE
             colorsView.text = colorBuilder
 
             val countryBuilder = StringBuilder()
-            data.countries.forEach {
+            data.countries?.forEach {
                 countryBuilder.append(it).append(", ")
             }
+            if (countryBuilder.isNullOrEmpty()) itemView.findViewById<LinearLayout>(R.id.countriesLayout).visibility =
+                View.GONE
+            else itemView.findViewById<LinearLayout>(R.id.countriesLayout).visibility = View.VISIBLE
             countriesView.text = countryBuilder
 
-            if (colorBuilder.isNullOrEmpty()){
-                itemView.findViewById<LinearLayout>(R.id.coloursLayout).visibility = View.GONE
-            }
-            if (countryBuilder.isNullOrEmpty()){
-                itemView.findViewById<LinearLayout>(R.id.countriesLayout).visibility = View.GONE
-            }
-
             itemView.setOnClickListener {
-                it.context.startActivity(Intent(it.context, CarOwnerActivity::class.java))
+                val intent = Intent(it.context, CarOwnerActivity::class.java)
+                intent.putExtra("extra", data)
+                it.context.startActivity(intent)
             }
         }
     }

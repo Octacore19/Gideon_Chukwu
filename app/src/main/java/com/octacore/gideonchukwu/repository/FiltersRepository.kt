@@ -5,8 +5,6 @@ import com.octacore.gideonchukwu.model.Model.CarOwners
 import com.octacore.gideonchukwu.model.Model.Filters
 import com.octacore.gideonchukwu.network.FiltersService.createService
 import com.opencsv.CSVReader
-import com.opencsv.bean.CsvToBean
-import com.opencsv.bean.HeaderColumnNameTranslateMappingStrategy
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -20,6 +18,7 @@ class FiltersRepository {
         try {
             return service.getFiltersList()
         } catch (err: Exception) {
+            err.printStackTrace()
             throw Exception("An error occurred")
         }
     }
